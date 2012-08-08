@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
@@ -27,22 +28,25 @@ public class HomePageLayout extends JFrame {
 		options.setBorder(new EtchedBorder());
 		getContentPane().add(options, BorderLayout.CENTER);
 		
-		setUpMenuOptions(this);
+		setUpMenuOptions();
 		
 		setVisible(true);
 		pack();
 	}
 	
-	private void setUpMenuOptions(JFrame context) {
+	private void setUpMenuOptions() {
 		
 		class MenuListener extends MouseAdapter {
 			public void mouseClicked(MouseEvent event){
-				if(event.getComponent().getName() == "quit"){
-					closeWindow();
+				if(event.getComponent().getName() == "quit") {
+					JOptionPane.showConfirmDialog(event.getComponent(), "Confirm, you!", "Test title", JOptionPane.YES_NO_CANCEL_OPTION);
+					closeWindow();	
+				}
+				else if(event.getComponent().getName() == "settings") {
+					JOptionPane.showMessageDialog(event.getComponent(), "Test");
 				}
 				else {
-					System.out.println("Not quit");
-					System.out.println(menu.getData());
+					JOptionPane.showInputDialog(event.getComponent(), "Input something!", "Title of input");
 				}
 			}
 			
@@ -58,6 +62,11 @@ public class HomePageLayout extends JFrame {
 		newGame.setName("newgame");
 		newGame.addMouseListener(listener);
 		options.add(newGame);
+		
+		JButton settings = new JButton("Settings");
+		settings.setName("settings");
+		settings.addMouseListener(listener);
+		options.add(settings);
 		
 		JButton quit = new JButton("Quit");
 		quit.setName("quit");
