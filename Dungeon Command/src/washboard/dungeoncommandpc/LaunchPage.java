@@ -1,12 +1,16 @@
 package washboard.dungeoncommandpc;
 
+import javax.swing.JFrame;
+
 public class LaunchPage {
 	
-	private HomePageLayout layout;
-	
 	public static void main(String[] args){
-		System.out.println("Hello, World!");
-		//layout = new HomePageLayout();
+		System.out.println("Launch Page Activated");
+		
+		HomePageData menu = new HomePageData();
+		JFrame appFrame = new HomePageLayout(menu);
+		appFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		appFrame.setVisible(true);
 		
 		
 	}
