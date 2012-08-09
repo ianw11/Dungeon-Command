@@ -13,23 +13,29 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
+import board.grid.RangeGrid;
+
 public class HomePageLayout extends JFrame {
 	
 	HomePageData menu;
 	JPanel options;
+	Object that;
 	
 	public HomePageLayout(HomePageData m) {
+		that = this;
 		System.out.println("layout created");
 		
 		menu = m;
 		
-		options = new JPanel(new GridLayout(3,1));
-		options.setPreferredSize(new Dimension(150,300));
+		options = new JPanel(new GridLayout(3,2));
+		//options.setPreferredSize(new Dimension(150,300));
 		options.setBorder(new EtchedBorder());
 		getContentPane().add(options, BorderLayout.CENTER);
 		
 		setUpMenuOptions();
 		
+		setPreferredSize(new Dimension(500,150));
+		setTitle("Don't close this window!!!");
 		setVisible(true);
 		pack();
 	}
@@ -39,14 +45,23 @@ public class HomePageLayout extends JFrame {
 		class MenuListener extends MouseAdapter {
 			public void mouseClicked(MouseEvent event){
 				if(event.getComponent().getName() == "quit") {
-					JOptionPane.showConfirmDialog(event.getComponent(), "Confirm, you!", "Test title", JOptionPane.YES_NO_CANCEL_OPTION);
-					closeWindow();	
+					/*int result = JOptionPane.showConfirmDialog(event.getComponent(), "Leave for sure?", "Test title", JOptionPane.YES_NO_OPTION);
+					if(result==0)*/
+						closeWindow();	
 				}
 				else if(event.getComponent().getName() == "settings") {
 					JOptionPane.showMessageDialog(event.getComponent(), "Test");
+					JFrame a = new Board();
 				}
 				else {
-					JOptionPane.showInputDialog(event.getComponent(), "Input something!", "Title of input");
+					String result = JOptionPane.showInputDialog(event.getComponent(), "Input something!", "Title of input");
+					if(result != null){
+						JFrame a = new CreatureFrame();
+						//options.add(new CreatureFrame());
+						//((JFrame)that).getContentPane().add(new CreatureFrame(), BorderLayout.EAST);
+						//((JFrame)that).pack();
+						//goInvisible();
+					}
 				}
 			}
 			
@@ -76,6 +91,14 @@ public class HomePageLayout extends JFrame {
 	
 	private void closeWindow() {
 		this.dispose();
+	}
+	
+	private void goInvisible() {
+		this.setVisible(false);
+	}
+	
+	public void mainGoVisible() {
+		setVisible(true);
 	}
 
 }
