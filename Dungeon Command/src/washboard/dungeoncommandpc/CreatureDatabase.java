@@ -9,6 +9,7 @@ public class CreatureDatabase {
 		{
 			add(new Creature("Umber Hulk", 100, 5, 2, 6, false, 30, new String[] {"Aberration"}, new String[] {"STR", "DEX"}, null, new Point(0,0)));
 			add(new Creature("War Wizard", 60, 4, 1, 6, true, 10, 30, 10, new String[]{"Humanoid", "Human", "Adventurer"}, new String[] {"INT"}, null, new Point(0,0)));
+			add(new Creature("Dragon Fighter", 120, 10, 1, 10, false, 40, new String[] {"Humanoid", "Fighter"}, new String[] {"STR"}, null, new Point(0,0)));
 			
 		}
 	};

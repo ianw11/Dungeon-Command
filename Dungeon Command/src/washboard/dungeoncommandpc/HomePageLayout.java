@@ -13,8 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
-import board.grid.RangeGrid;
-
 public class HomePageLayout extends JFrame {
 	
 	HomePageData menu;
@@ -51,12 +49,12 @@ public class HomePageLayout extends JFrame {
 				}
 				else if(event.getComponent().getName() == "settings") {
 					JOptionPane.showMessageDialog(event.getComponent(), "Test");
-					JFrame a = new Board();
+					new Board();
 				}
 				else {
 					String result = JOptionPane.showInputDialog(event.getComponent(), "Input something!", "Title of input");
 					if(result != null){
-						JFrame a = new CreatureFrame();
+						new CreatureFrame();
 						//options.add(new CreatureFrame());
 						//((JFrame)that).getContentPane().add(new CreatureFrame(), BorderLayout.EAST);
 						//((JFrame)that).pack();
@@ -93,13 +91,13 @@ public class HomePageLayout extends JFrame {
 		this.dispose();
 	}
 	
-	private void goInvisible() {
-		this.setVisible(false);
-	}
+	//private void goInvisible() {
+	//	this.setVisible(false);
+	//}
 	
-	public void mainGoVisible() {
-		setVisible(true);
-	}
+	//public void mainGoVisible() {
+	//	setVisible(true);
+	//}
 
 }
 

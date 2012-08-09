@@ -11,9 +11,9 @@ import board.pieces.Piece;
 public class Creature implements Piece{
 	
 	//Piece variables for the interface
-	private Color color;
+	private Color color = new Color(0,0,0);
 	private Space space;
-	private Grid grid;
+	private Grid<Piece> grid;
 	
 	private String name;
 	private int maxHitPoints;
