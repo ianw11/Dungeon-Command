@@ -5,9 +5,13 @@ public class CreatureFeatures {
 	private String friendlyName;
 	private String friendlyDescription;
 	
+	/**
+	 * @param name
+	 * @param description
+	 */
 	public CreatureFeatures(String name, String description) {
 		friendlyName = name;
-		friendlyName = description;
+		friendlyDescription = description;
 	}
 	
 	public String getName() {

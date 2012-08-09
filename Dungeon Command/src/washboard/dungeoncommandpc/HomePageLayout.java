@@ -13,29 +13,26 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
-public class HomePageLayout extends JFrame {
+public class HomePageLayout extends JPanel {
 	
 	HomePageData menu;
-	JPanel options;
+	//JPanel homePageMenu;
 	Object that;
 	
 	public HomePageLayout(HomePageData m) {
 		that = this;
-		System.out.println("layout created");
-		
 		menu = m;
 		
-		options = new JPanel(new GridLayout(3,2));
-		//options.setPreferredSize(new Dimension(150,300));
-		options.setBorder(new EtchedBorder());
-		getContentPane().add(options, BorderLayout.CENTER);
+		setLayout(new GridLayout(3,2));
+		setBorder(new EtchedBorder());
+		
+		//add(homePageMenu, BorderLayout.CENTER);
 		
 		setUpMenuOptions();
 		
-		setPreferredSize(new Dimension(500,150));
-		setTitle("Don't close this window!!!");
+		//setPreferredSize(new Dimension(500,350));
 		setVisible(true);
-		pack();
+		//((JFrame)getParent()).pack();
 	}
 	
 	private void setUpMenuOptions() {
@@ -45,7 +42,7 @@ public class HomePageLayout extends JFrame {
 				if(event.getComponent().getName() == "quit") {
 					/*int result = JOptionPane.showConfirmDialog(event.getComponent(), "Leave for sure?", "Test title", JOptionPane.YES_NO_OPTION);
 					if(result==0)*/
-						closeWindow();	
+						System.err.println("No quit yet");	
 				}
 				else if(event.getComponent().getName() == "settings") {
 					JOptionPane.showMessageDialog(event.getComponent(), "Test");
@@ -74,21 +71,17 @@ public class HomePageLayout extends JFrame {
 		JButton newGame = new JButton("New Game");
 		newGame.setName("newgame");
 		newGame.addMouseListener(listener);
-		options.add(newGame);
+		add(newGame);
 		
 		JButton settings = new JButton("Settings");
 		settings.setName("settings");
 		settings.addMouseListener(listener);
-		options.add(settings);
+		add(settings);
 		
 		JButton quit = new JButton("Quit");
 		quit.setName("quit");
 		quit.addMouseListener(listener);
-		options.add(quit);
-	}
-	
-	private void closeWindow() {
-		this.dispose();
+		add(quit);
 	}
 	
 	//private void goInvisible() {

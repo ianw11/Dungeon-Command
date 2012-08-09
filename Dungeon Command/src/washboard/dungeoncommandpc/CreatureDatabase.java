@@ -14,6 +14,12 @@ public class CreatureDatabase {
 		}
 	};
 	
+	public static ArrayList<CreatureFeatures> creatureFeatureList = new ArrayList<CreatureFeatures>() {
+		{
+			add(new CreatureFeatures("Burrow", "Move through walls and slow spaces."));
+		}
+	};
+	
 	
 	//public CreatureDatabase() {
 	//	creatures.add(new Creature("Umber Hulk", 100, 5, 2, 6, false, 30, new String[] {"Aberration"}, new String[] {"STR", "DEX"}, null, new Point(0,0)));
