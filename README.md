@@ -26,3 +26,5 @@ pack();
 
 
 https://developers.google.com/java-dev-tools/download-wbpro
+
+http://roseindia.net/java/example/java/swing/chess-application-swing.shtml
