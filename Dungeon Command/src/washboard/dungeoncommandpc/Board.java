@@ -1,29 +1,37 @@
 package washboard.dungeoncommandpc;
 
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import board.GridPane;
 import board.grid.RangeGrid;
+import board.grid.Space;
 
-public class Board extends JFrame{
+public class Board extends JPanel{
 	
 	public Board() {
 		
-		RangeGrid<Creature> range = new RangeGrid<Creature>(16,16);
-		GridPane grid = new GridPane(range);
-		JPanel gridHolder = new JPanel();
+		RangeGrid<Creature> pieces = new RangeGrid<Creature>(16,16);
 		
-		range.put(range.allValidSpaces().iterator().next(), new Creature("Hulk-o", 20, 2, 1, 5, 10, null, null, null, new Point(0,0)));
-		System.out.println(range.allValidSpaces());
+		pieces.put(Space.get(0, 0), new Creature("Kelp-o", 20, 2, 1, 5, 10, null, null, null, new Point(0,0), "res/DungeonCommand.jpg"));
 		
-		gridHolder.add(grid);
-		add(gridHolder);
+		GridPane grid = new GridPane(pieces);
+		
+		add(grid);
+		
+		JButton back = new JButton("Back");
+		back.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Driver.backToHome(Board.this);
+			}
+		});
+		add(back);
 		
 		setVisible(true);
-		pack();
 	}
 	
 	

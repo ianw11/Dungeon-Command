@@ -23,7 +23,7 @@ public final class Driver {
 	
 	public Driver() {
 		application = new JFrame("Dungeon Commander");
-		home.setPreferredSize(new Dimension(400,600));
+		home.setPreferredSize(new Dimension(400,500));
 		application.add(home);
 		
 		application.pack();
@@ -41,9 +41,10 @@ public final class Driver {
 		application.pack();
 	}
 	
-	public static void backToHome(JPanel orig){
-		application.getContentPane().remove(orig);
+	public static void backToHome(JPanel current){
+		application.getContentPane().remove(current);
 		home.setVisible(true);
+		application.validate();
 		
 	}
 	

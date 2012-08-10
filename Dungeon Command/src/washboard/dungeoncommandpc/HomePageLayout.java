@@ -1,22 +1,30 @@
 package washboard.dungeoncommandpc;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.border.EtchedBorder;
-import java.awt.Dimension;
-import java.awt.Color;
 
 public class HomePageLayout extends JPanel {
 	
+	private boolean click;
+	
 	public HomePageLayout() {
 		setAutoscrolls(true);
-		setPreferredSize(new Dimension(400, 600));
+		setPreferredSize(new Dimension(400, 500));
 		setBorder(new EtchedBorder());
+		
+		click = true;
 		
 		setUpMenuOptions();
 	}
@@ -25,18 +33,40 @@ public class HomePageLayout extends JPanel {
 	
 	private void setUpMenuOptions() {
 		
+		final JDialog popup = new JDialog();
+		popup.setTitle("Creature Card");
+		popup.setSize(new Dimension(400,550));
+		popup.setResizable(false);
+		
 		class MenuListener extends MouseAdapter {
-			
 			public void mouseClicked(MouseEvent event) {
 				if(event.getComponent().getName() == "quit") {
-					
 					Driver.endApp();
 				}
 				else if(event.getComponent().getName() == "settings") {
-					new Board();
+					Driver.switchPanel(new Board());
+				}
+				else if(event.getComponent().getName() == "popUp"){
+					if (click){
+						click=false;
+						Component[] t = popup.getComponents();
+						System.err.println(t.length);
+						for(Component c: t){
+							System.out.println(c.getName());
+						}
+						popup.add(new CreatureCardLayout(new ActionListener() {
+							public void actionPerformed(ActionEvent e){
+								popup.dispose();
+								click=true;
+							}
+						}));
+						
+						//popup.pack();
+						popup.setVisible(true);
+					}
 				}
 				else {
-					Driver.switchPanel(new CreatureCardLayout());
+					System.err.println("NOT IMPLEMENTED YET");
 				}
 			}
 			
@@ -46,38 +76,49 @@ public class HomePageLayout extends JPanel {
 			public void mousePressed(MouseEvent event){}
 		} //End of MenuListener
 		
+		
 		MouseListener listener = new MenuListener();
 		
 		JButton newGame = new JButton("New Game");
 		newGame.setBackground(Color.GREEN);
 		newGame.setName("newgame");
+		//Temporarily removing this from the listener above
 		newGame.addMouseListener(listener);
+		//newGame.addActionListener(listener);
 		SpringLayout springLayout = new SpringLayout();
-		springLayout.putConstraint(SpringLayout.NORTH, newGame, 65, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.NORTH, newGame, 10, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, newGame, 2, SpringLayout.WEST, this);
-		springLayout.putConstraint(SpringLayout.SOUTH, newGame, 175, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.SOUTH, newGame, 120, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.EAST, newGame, -2, SpringLayout.EAST, this);
 		setLayout(springLayout);
 		add(newGame);
 		
 		JButton settings = new JButton("Settings");
-		springLayout.putConstraint(SpringLayout.NORTH, settings, 110, SpringLayout.SOUTH, newGame);
-		springLayout.putConstraint(SpringLayout.EAST, settings, 0, SpringLayout.EAST, newGame);
-		springLayout.putConstraint(SpringLayout.WEST, settings, 2, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.NORTH, settings, 21, SpringLayout.SOUTH, newGame);
+		springLayout.putConstraint(SpringLayout.WEST, settings, 0, SpringLayout.WEST, newGame);
+		springLayout.putConstraint(SpringLayout.EAST, settings, -2, SpringLayout.EAST, this);
 		settings.setName("settings");
 		settings.addMouseListener(listener);
+		//settings.addActionListener(listener);
 		add(settings);
 		
 		JButton quit = new JButton("Quit");
-		springLayout.putConstraint(SpringLayout.SOUTH, settings, -145, SpringLayout.NORTH, quit);
-		springLayout.putConstraint(SpringLayout.WEST, quit, 8, SpringLayout.WEST, this);
-		springLayout.putConstraint(SpringLayout.EAST, quit, -12, SpringLayout.EAST, this);
-		springLayout.putConstraint(SpringLayout.NORTH, quit, 525, SpringLayout.NORTH, this);
-		springLayout.putConstraint(SpringLayout.SOUTH, quit, -10, SpringLayout.SOUTH, this);
-		quit.setPreferredSize(new Dimension(55, 23));
+		springLayout.putConstraint(SpringLayout.SOUTH, settings, -33, SpringLayout.NORTH, quit);
+		springLayout.putConstraint(SpringLayout.NORTH, quit, 235, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, quit, 0, SpringLayout.WEST, newGame);
+		springLayout.putConstraint(SpringLayout.SOUTH, quit, -200, SpringLayout.SOUTH, this);
+		springLayout.putConstraint(SpringLayout.EAST, quit, -18, SpringLayout.EAST, this);
 		quit.setName("quit");
 		quit.addMouseListener(listener);
+		//quit.addActionListener(listener);
 		add(quit);
+		
+		JButton card = new JButton("Card");
+		springLayout.putConstraint(SpringLayout.NORTH, card, 6, SpringLayout.SOUTH, settings);
+		springLayout.putConstraint(SpringLayout.WEST, card, 0, SpringLayout.WEST, newGame);
+		card.setName("popUp");
+		card.addMouseListener(listener);
+		//card.addActionListener(listener);
+		add(card);
 	}
-
 }

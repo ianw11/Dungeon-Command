@@ -34,6 +34,8 @@ public class Creature implements Piece{
 	
 	private Point position;
 	
+	String cardImage;
+	
 	//Methods for the interface
 	public Color getColor() {
 		return new Color(color.getRGB());
@@ -81,24 +83,11 @@ public class Creature implements Piece{
 	
 	
 	
-	/**
-	 * @param nam The name of the card
-	 * @param hp
-	 * @param lev
-	 * @param size
-	 * @param spd
-	 * @param tap
-	 * @param range
-	 * @param mDmg
-	 * @param types
-	 * @param abilities
-	 * @param features
-	 * @param startingPosition
-	 */
 	public Creature(String nam, int hp, int lev, int size, int spd, int mDmg,
 			String[] types, String[] abilities,
-			ArrayList<CreatureFeatures> features, Point startingPosition) {
+			ArrayList<CreatureFeatures> features, Point startingPosition, String imageLocation) {
 		int i;
+		cardImage = imageLocation;
 		name = nam;
 		maxHitPoints = hp;
 		currHitPoints = hp;
@@ -127,26 +116,14 @@ public class Creature implements Piece{
 		hasRangedAttack = false;
 		isTapped = false;
 	}
-	/**
-	 * @param nam The name of the card
-	 * @param hp
-	 * @param lev
-	 * @param size
-	 * @param spd
-	 * @param range
-	 * @param mDmg
-	 * @param rDmg
-	 * @param rDist
-	 * @param types
-	 * @param abilities
-	 * @param features
-	 * @param startingPosition
-	 */
+	
+	
 	public Creature(String nam, int hp, int lev, int size, int spd, int mDmg,
 			int rDmg, int rDist, String[] types, String[] abilities,
-			ArrayList<CreatureFeatures> features, Point startingPosition) {
-		int i;
+			ArrayList<CreatureFeatures> features, Point startingPosition, String imageLocation) {
 		
+		int i;
+		cardImage = imageLocation;
 		name = nam;
 		if (hp%10 != 0) {
 			hp = hp*10;
@@ -256,6 +233,10 @@ public class Creature implements Piece{
 	
 	public ArrayList<CreatureFeatures> getFeatures() {
 		return new ArrayList<CreatureFeatures>(uniqueFeatures);
+	}
+	
+	public String getImageString() {
+		return new String(cardImage);
 	}
 	
 
