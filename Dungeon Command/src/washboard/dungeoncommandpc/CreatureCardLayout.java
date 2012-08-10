@@ -17,14 +17,13 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.BoxView;
@@ -39,14 +38,15 @@ import javax.swing.text.StyledDocument;
 import javax.swing.text.StyledEditorKit;
 import javax.swing.text.View;
 import javax.swing.text.ViewFactory;
-import javax.swing.border.BevelBorder;
+import java.awt.Component;
+import javax.swing.BoxLayout;
 
-public class CreatureFrame extends JFrame {
+public class CreatureCardLayout extends JPanel {
 	
-	public CreatureFrame() {
+	public CreatureCardLayout() {
+		setBackground(Color.DARK_GRAY);
 		
-		JPanel panel = new JPanel();
-		panel.setPreferredSize(new Dimension(400, 600));
+		setPreferredSize(new Dimension(400,600));
 		
 		JPanel title = new JPanel();
 		title.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
@@ -57,11 +57,11 @@ public class CreatureFrame extends JFrame {
 		
 		JPanel details = new JPanel(new BorderLayout());
 		details.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		System.out.println("Creature Frame created");
 		
 		//FOR TESTING. PICKS A RANDOM UNIT
 		Random generator = new Random();
 		Creature testDude = CreatureDatabase.creatures.get(generator.nextInt(CreatureDatabase.creatures.size()));
+		int featRandom = generator.nextInt(CreatureDatabase.creatureFeatureList.size());
 		
 		/////////////////////////////////////////////////////
 		JTextField level = new JTextField();
@@ -96,16 +96,35 @@ public class CreatureFrame extends JFrame {
 		hp.setHorizontalAlignment(SwingConstants.CENTER);
 		hp.setEditable(false);
 		title.add(hp);
+		String words = testDude.getAbilityTypes()[0];
+		for(int i = 1; i<testDude.getAbilityTypes().length; i++)
+			words = words.concat("; " + testDude.getAbilityTypes()[i]);
+		
+		JPanel panel = new JPanel();
+		stats.add(panel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		
 		/////////////////////////////////////////////////////
 		
-		JTextField ability = new JTextField(testDude.getAbilityTypes().toString());
+		JTextField ability = new JTextField();
+		ability.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(ability);
+		ability.setText(words);
 		ability.setEditable(false);
-		stats.add(ability);
 		
-		JTextField melee = new JTextField(testDude.getMeleeDamage()+"");
+		JTextField melee = new JTextField(testDude.getMeleeDamage()+" DMG");
+		melee.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(melee);
 		melee.setEditable(false);
-		stats.add(melee);
+		
+		
+		JTextField ranged = new JTextField();
+		ranged.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(ranged);
+		ranged.setEditable(false);
+		if(testDude.hasRangedAttack()) {
+			ranged.setText(testDude.getRangedDamage() + " DMG (" + testDude.getRangedDistance() + " DIST)");
+		}
 		
 		BufferedImage image;
 		try{
@@ -116,6 +135,7 @@ public class CreatureFrame extends JFrame {
 		}
 		ImageIcon icon = new ImageIcon(image);
 		JLabel borderedImage = new JLabel(icon);
+		borderedImage.setAlignmentX(Component.CENTER_ALIGNMENT);
 		borderedImage.setPreferredSize(new Dimension(100,100));
 		stats.add(borderedImage);
 		
@@ -126,11 +146,12 @@ public class CreatureFrame extends JFrame {
 		features.setBackground(SystemColor.menu);
 		features.setEditable(false);
 		details.add(features);
-		features.setText(CreatureDatabase.creatureFeatureList.get(0).getName() + ":\n" + CreatureDatabase.creatureFeatureList.get(0).getDescription());
+		features.setText(CreatureDatabase.creatureFeatureList.get(featRandom).getName() + ":\n" + CreatureDatabase.creatureFeatureList.get(featRandom).getDescription());
 		
 		/////////////////////////////////////////////////////
 		
 		JButton close = new JButton("Back");
+		close.setAutoscrolls(true);
 		MouseListener listener = new CreatureFrameListener();
 		close.addMouseListener(listener);
 		
@@ -138,45 +159,43 @@ public class CreatureFrame extends JFrame {
 		
 		
 		SpringLayout sl_panel = new SpringLayout();
-		sl_panel.putConstraint(SpringLayout.NORTH, details, 57, SpringLayout.SOUTH, stats);
-		sl_panel.putConstraint(SpringLayout.WEST, details, 0, SpringLayout.WEST, title);
-		sl_panel.putConstraint(SpringLayout.SOUTH, details, -6, SpringLayout.NORTH, close);
-		sl_panel.putConstraint(SpringLayout.EAST, details, 0, SpringLayout.EAST, title);
-		sl_panel.putConstraint(SpringLayout.NORTH, close, 530, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.NORTH, title, 16, SpringLayout.NORTH, this);
+		sl_panel.putConstraint(SpringLayout.WEST, title, 1, SpringLayout.WEST, this);
+		sl_panel.putConstraint(SpringLayout.SOUTH, title, 80, SpringLayout.NORTH, this);
+		sl_panel.putConstraint(SpringLayout.EAST, title, 400, SpringLayout.WEST, this);
+		sl_panel.putConstraint(SpringLayout.WEST, details, 10, SpringLayout.WEST, this);
+		sl_panel.putConstraint(SpringLayout.EAST, details, -10, SpringLayout.EAST, this);
+		sl_panel.putConstraint(SpringLayout.NORTH, details, 386, SpringLayout.NORTH, this);
+		sl_panel.putConstraint(SpringLayout.SOUTH, details, -5, SpringLayout.NORTH, close);
 		
-		sl_panel.putConstraint(SpringLayout.NORTH, stats, 71, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, stats, 329, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, title, 64, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.WEST, close, 0, SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, close, 600, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, close, 400, SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.NORTH, title, 0, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.WEST, title, 0, SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, title, 400, SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.WEST, stats, 0, SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, stats, 400, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.NORTH, stats, 115, SpringLayout.NORTH, this);
+		sl_panel.putConstraint(SpringLayout.WEST, stats, 0, SpringLayout.WEST, this);
+		sl_panel.putConstraint(SpringLayout.SOUTH, stats, -13, SpringLayout.NORTH, details);
+		sl_panel.putConstraint(SpringLayout.EAST, stats, 400, SpringLayout.WEST, this);
+		sl_panel.putConstraint(SpringLayout.WEST, close, 10, SpringLayout.WEST, this);
+		sl_panel.putConstraint(SpringLayout.EAST, close, -10, SpringLayout.EAST, this);
+		sl_panel.putConstraint(SpringLayout.SOUTH, close, 590, SpringLayout.NORTH, this);
+		sl_panel.putConstraint(SpringLayout.NORTH, close, 529, SpringLayout.NORTH, this);
 		
 		sl_panel.putConstraint(SpringLayout.NORTH, features, 6, SpringLayout.SOUTH, stats);
 		sl_panel.putConstraint(SpringLayout.WEST, features, 0, SpringLayout.WEST, title);
 		sl_panel.putConstraint(SpringLayout.SOUTH, features, -6, SpringLayout.NORTH, close);
 		sl_panel.putConstraint(SpringLayout.EAST, features, 0, SpringLayout.EAST, title);
-		panel.setLayout(sl_panel);
+		setLayout(sl_panel);
 		
-		panel.add(title);
-		panel.add(stats);
-		panel.add(details);
-		panel.add(close);
-		getContentPane().add(panel);
+		add(title);
+		add(stats);
+		add(details);
+		add(close);
 		
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		
 		setVisible(true);
-		pack();
 	}
 	
 	
 	private class CreatureFrameListener extends MouseAdapter{
 		public void mouseClicked(MouseEvent event){
-			dispose();
+			Driver.backToHome(CreatureCardLayout.this);
 		}
 		
 		public void mouseExited(MouseEvent event){}

@@ -95,7 +95,7 @@ public class Creature implements Piece{
 	 * @param features
 	 * @param startingPosition
 	 */
-	public Creature(String nam, int hp, int lev, int size, int spd, boolean range, int mDmg,
+	public Creature(String nam, int hp, int lev, int size, int spd, int mDmg,
 			String[] types, String[] abilities,
 			ArrayList<CreatureFeatures> features, Point startingPosition) {
 		int i;
@@ -104,7 +104,6 @@ public class Creature implements Piece{
 		currHitPoints = hp;
 		level = lev;
 		movementSpeed = spd;
-		hasRangedAttack = range;
 		meleeDamage = mDmg;
 		
 		if(types != null){
@@ -125,6 +124,7 @@ public class Creature implements Piece{
 		creatureSize = size;
 		position = startingPosition;
 		
+		hasRangedAttack = false;
 		isTapped = false;
 	}
 	/**
@@ -142,7 +142,7 @@ public class Creature implements Piece{
 	 * @param features
 	 * @param startingPosition
 	 */
-	public Creature(String nam, int hp, int lev, int size, int spd, boolean range, int mDmg,
+	public Creature(String nam, int hp, int lev, int size, int spd, int mDmg,
 			int rDmg, int rDist, String[] types, String[] abilities,
 			ArrayList<CreatureFeatures> features, Point startingPosition) {
 		int i;
@@ -160,7 +160,7 @@ public class Creature implements Piece{
 		currHitPoints = hp;
 		level = lev;
 		movementSpeed = spd;
-		hasRangedAttack = range;
+		hasRangedAttack = true;
 		meleeDamage = mDmg;
 		rangedDamage = rDmg;
 		rangedDistance = rDist;
@@ -227,11 +227,15 @@ public class Creature implements Piece{
 	}
 	
 	public int getRangedDamage() {
-		return rangedDamage;
+		if(hasRangedAttack)
+			return rangedDamage;
+		else return 0;
 	}
 	
 	public int getRangedDistance() {
-		return rangedDistance;
+		if (hasRangedAttack)
+			return rangedDistance;
+		else return 0;
 	}
 	
 	public void changePosition(int deltaX, int deltaY) {

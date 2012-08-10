@@ -1,62 +1,42 @@
 package washboard.dungeoncommandpc;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SpringLayout;
 import javax.swing.border.EtchedBorder;
+import java.awt.Dimension;
+import java.awt.Color;
 
 public class HomePageLayout extends JPanel {
 	
-	HomePageData menu;
-	//JPanel homePageMenu;
-	Object that;
-	
-	public HomePageLayout(HomePageData m) {
-		that = this;
-		menu = m;
-		
-		setLayout(new GridLayout(3,2));
+	public HomePageLayout() {
+		setAutoscrolls(true);
+		setPreferredSize(new Dimension(400, 600));
 		setBorder(new EtchedBorder());
 		
-		//add(homePageMenu, BorderLayout.CENTER);
-		
 		setUpMenuOptions();
-		
-		//setPreferredSize(new Dimension(500,350));
-		setVisible(true);
-		//((JFrame)getParent()).pack();
 	}
+	
+	// Use JOptionPane for popup menus!!!!
 	
 	private void setUpMenuOptions() {
 		
 		class MenuListener extends MouseAdapter {
-			public void mouseClicked(MouseEvent event){
+			
+			public void mouseClicked(MouseEvent event) {
 				if(event.getComponent().getName() == "quit") {
-					/*int result = JOptionPane.showConfirmDialog(event.getComponent(), "Leave for sure?", "Test title", JOptionPane.YES_NO_OPTION);
-					if(result==0)*/
-						System.err.println("No quit yet");	
+					
+					Driver.endApp();
 				}
 				else if(event.getComponent().getName() == "settings") {
-					JOptionPane.showMessageDialog(event.getComponent(), "Test");
 					new Board();
 				}
 				else {
-					String result = JOptionPane.showInputDialog(event.getComponent(), "Input something!", "Title of input");
-					if(result != null){
-						new CreatureFrame();
-						//options.add(new CreatureFrame());
-						//((JFrame)that).getContentPane().add(new CreatureFrame(), BorderLayout.EAST);
-						//((JFrame)that).pack();
-						//goInvisible();
-					}
+					Driver.switchPanel(new CreatureCardLayout());
 				}
 			}
 			
@@ -69,50 +49,35 @@ public class HomePageLayout extends JPanel {
 		MouseListener listener = new MenuListener();
 		
 		JButton newGame = new JButton("New Game");
+		newGame.setBackground(Color.GREEN);
 		newGame.setName("newgame");
 		newGame.addMouseListener(listener);
+		SpringLayout springLayout = new SpringLayout();
+		springLayout.putConstraint(SpringLayout.NORTH, newGame, 65, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, newGame, 2, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.SOUTH, newGame, 175, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.EAST, newGame, -2, SpringLayout.EAST, this);
+		setLayout(springLayout);
 		add(newGame);
 		
 		JButton settings = new JButton("Settings");
+		springLayout.putConstraint(SpringLayout.NORTH, settings, 110, SpringLayout.SOUTH, newGame);
+		springLayout.putConstraint(SpringLayout.EAST, settings, 0, SpringLayout.EAST, newGame);
+		springLayout.putConstraint(SpringLayout.WEST, settings, 2, SpringLayout.WEST, this);
 		settings.setName("settings");
 		settings.addMouseListener(listener);
 		add(settings);
 		
 		JButton quit = new JButton("Quit");
+		springLayout.putConstraint(SpringLayout.SOUTH, settings, -145, SpringLayout.NORTH, quit);
+		springLayout.putConstraint(SpringLayout.WEST, quit, 8, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.EAST, quit, -12, SpringLayout.EAST, this);
+		springLayout.putConstraint(SpringLayout.NORTH, quit, 525, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.SOUTH, quit, -10, SpringLayout.SOUTH, this);
+		quit.setPreferredSize(new Dimension(55, 23));
 		quit.setName("quit");
 		quit.addMouseListener(listener);
 		add(quit);
 	}
-	
-	//private void goInvisible() {
-	//	this.setVisible(false);
-	//}
-	
-	//public void mainGoVisible() {
-	//	setVisible(true);
-	//}
 
 }
-
-/*
-   public class FooWindow extends JFrame {
-        public FooWindow() {
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setBounds(5, 5, 400, 300);  // yeah yeah, this is an example ;P
-            setVisible(true);
-        }
-        public void pullThePlug() {
-                WindowEvent wev = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
-                Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
-        }
-    }
-
-// Here's how that would be employed from elsewhere -
-
-    // someplace the window gets created ..
-    FooWindow fooey = new FooWindow();
-    ...
-    // and someplace else, you can close it thusly
-    fooey.pullThePlug();
-    ]
-    */

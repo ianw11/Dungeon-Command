@@ -16,7 +16,7 @@ public class Board extends JFrame{
 		GridPane grid = new GridPane(range);
 		JPanel gridHolder = new JPanel();
 		
-		range.put(range.allValidSpaces().iterator().next(), new Creature("Hulk-o", 20, 2, 1, 5, false, 10, null, null, null, new Point(0,0)));
+		range.put(range.allValidSpaces().iterator().next(), new Creature("Hulk-o", 20, 2, 1, 5, 10, null, null, null, new Point(0,0)));
 		System.out.println(range.allValidSpaces());
 		
 		gridHolder.add(grid);
