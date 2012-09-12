@@ -6,13 +6,15 @@ public class OrderCard {
 	private int level;
 	private String ability;
 	private int actionType; //0 is standard, 1 is Minor, 2 is immediate
+	private String cardEffect;
 	
 	
-	public OrderCard(String nam, int lev, String abil, int speed) {
+	public OrderCard(String nam, int lev, String abil, int speed, String effect) {
 		name = nam;
 		level = lev;
 		ability = abil;
 		actionType = speed;
+		cardEffect = effect;
 	}
 	
 	public String getName() {
@@ -29,6 +31,10 @@ public class OrderCard {
 	
 	public int getCastingSpeed() {
 		return actionType;
+	}
+	
+	public String getCardEffect() {
+		return new String(cardEffect);
 	}
 	
 

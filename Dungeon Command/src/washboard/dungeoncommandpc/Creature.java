@@ -11,9 +11,9 @@ import board.pieces.Piece;
 public class Creature implements Piece{
 	
 	//Piece variables for the interface
-	private Color color;
+	private Color color = new Color(0,0,0);
 	private Space space;
-	private Grid grid;
+	private Grid<Piece> grid;
 	
 	private String name;
 	private int maxHitPoints;
@@ -34,9 +34,11 @@ public class Creature implements Piece{
 	
 	private Point position;
 	
+	String cardImage;
+	
 	//Methods for the interface
 	public Color getColor() {
-		return new Color(color.getRGB());
+		return color;
 	}
 	public Space getCurrentSpace() {
 		return space;
@@ -54,7 +56,7 @@ public class Creature implements Piece{
 		//TO BE IMPLEMENTED
 	}
 	public void setColor(Color c) {
-		color = new Color(c.getRGB());
+		color = c;
 	}
 	
 	
@@ -80,31 +82,17 @@ public class Creature implements Piece{
 	}
 	
 	
-	
-	/**
-	 * @param nam The name of the card
-	 * @param hp
-	 * @param lev
-	 * @param size
-	 * @param spd
-	 * @param tap
-	 * @param range
-	 * @param mDmg
-	 * @param types
-	 * @param abilities
-	 * @param features
-	 * @param startingPosition
-	 */
-	public Creature(String nam, int hp, int lev, int size, int spd, boolean range, int mDmg,
+	//No Range
+	public Creature(String nam, int hp, int lev, int size, int spd, int mDmg,
 			String[] types, String[] abilities,
-			ArrayList<CreatureFeatures> features, Point startingPosition) {
+			ArrayList<CreatureFeatures> features, Point startingPosition, String imageLocation) {
 		int i;
+		cardImage = imageLocation;
 		name = nam;
 		maxHitPoints = hp;
 		currHitPoints = hp;
 		level = lev;
 		movementSpeed = spd;
-		hasRangedAttack = range;
 		meleeDamage = mDmg;
 		
 		if(types != null){
@@ -125,28 +113,18 @@ public class Creature implements Piece{
 		creatureSize = size;
 		position = startingPosition;
 		
+		hasRangedAttack = false;
 		isTapped = false;
 	}
-	/**
-	 * @param nam The name of the card
-	 * @param hp
-	 * @param lev
-	 * @param size
-	 * @param spd
-	 * @param range
-	 * @param mDmg
-	 * @param rDmg
-	 * @param rDist
-	 * @param types
-	 * @param abilities
-	 * @param features
-	 * @param startingPosition
-	 */
-	public Creature(String nam, int hp, int lev, int size, int spd, boolean range, int mDmg,
-			int rDmg, int rDist, String[] types, String[] abilities,
-			ArrayList<CreatureFeatures> features, Point startingPosition) {
-		int i;
+	
+	//Has Range
+	public Creature(String nam, int hp, int lev, int size, int spd, int mDmg,
+			int rDmg, int rDist,
+			String[] types, String[] abilities,
+			ArrayList<CreatureFeatures> features, Point startingPosition, String imageLocation) {
 		
+		int i;
+		cardImage = imageLocation;
 		name = nam;
 		if (hp%10 != 0) {
 			hp = hp*10;
@@ -160,7 +138,7 @@ public class Creature implements Piece{
 		currHitPoints = hp;
 		level = lev;
 		movementSpeed = spd;
-		hasRangedAttack = range;
+		hasRangedAttack = true;
 		meleeDamage = mDmg;
 		rangedDamage = rDmg;
 		rangedDistance = rDist;
@@ -227,11 +205,15 @@ public class Creature implements Piece{
 	}
 	
 	public int getRangedDamage() {
-		return rangedDamage;
+		if(hasRangedAttack)
+			return rangedDamage;
+		else return 0;
 	}
 	
 	public int getRangedDistance() {
-		return rangedDistance;
+		if (hasRangedAttack)
+			return rangedDistance;
+		else return 0;
 	}
 	
 	public void changePosition(int deltaX, int deltaY) {
@@ -252,6 +234,10 @@ public class Creature implements Piece{
 	
 	public ArrayList<CreatureFeatures> getFeatures() {
 		return new ArrayList<CreatureFeatures>(uniqueFeatures);
+	}
+	
+	public String getImageString() {
+		return new String(cardImage);
 	}
 	
 
