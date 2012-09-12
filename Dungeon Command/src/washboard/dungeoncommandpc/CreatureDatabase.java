@@ -16,10 +16,7 @@ public class CreatureDatabase {
 	
 	public static ArrayList<CreatureFeatures> creatureFeatureList = new ArrayList<CreatureFeatures>() {
 		{
-<<<<<<< HEAD
 			add(new CreatureFeatures("Empty Space Holder",""));
-=======
->>>>>>> branch 'master' of git@github.com:ianw11/Dungeon-Command.git
 			add(new CreatureFeatures("Burrow", "Move through walls and slow spaces."));
 			add(new CreatureFeatures("Scuttle", "Unaffected by enemy units (don't have to stop next to one)."));
 			add(new CreatureFeatures("Confusion Gaze", "{tap}: As a standard action, choose 1 enemy creature within 5 squares and slide that creature 3 squares," +
