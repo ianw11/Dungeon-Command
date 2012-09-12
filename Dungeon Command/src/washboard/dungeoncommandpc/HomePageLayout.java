@@ -17,10 +17,21 @@ import javax.swing.border.EtchedBorder;
 
 public class HomePageLayout extends JPanel {
 	
+<<<<<<< HEAD
 	public HomePageLayout() {
 		setAutoscrolls(true);
 		setPreferredSize(new Dimension(400, 500));
 		setBorder(new EtchedBorder());
+=======
+	private boolean click;
+	
+	public HomePageLayout() {
+		setAutoscrolls(true);
+		setPreferredSize(new Dimension(400, 500));
+		setBorder(new EtchedBorder());
+		
+		click = true;
+>>>>>>> branch 'master' of git@github.com:ianw11/Dungeon-Command.git
 		
 		setUpMenuOptions();
 	}
@@ -29,7 +40,14 @@ public class HomePageLayout extends JPanel {
 	
 	private void setUpMenuOptions() {
 		
+<<<<<<< HEAD
 		
+=======
+		final JDialog popup = new JDialog();
+		popup.setTitle("Creature Card");
+		popup.setSize(new Dimension(400,550));
+		popup.setResizable(false);
+>>>>>>> branch 'master' of git@github.com:ianw11/Dungeon-Command.git
 		
 		class MenuListener extends MouseAdapter {
 			public void mouseClicked(MouseEvent event) {
@@ -37,6 +55,7 @@ public class HomePageLayout extends JPanel {
 					Driver.endApp();
 				}
 				else if(event.getComponent().getName() == "settings") {
+<<<<<<< HEAD
 					Driver.switchPanel("board", new Board());
 				}
 				else if(event.getComponent().getName() == "popUp"){
@@ -61,6 +80,28 @@ public class HomePageLayout extends JPanel {
 					popup.setTitle("Order Card Preview");
 					popup.setSize(new Dimension(400,550));
 					popup.setResizable(false);
+=======
+					Driver.switchPanel(new Board());
+				}
+				else if(event.getComponent().getName() == "popUp"){
+					if (click){
+						click=false;
+						Component[] t = popup.getComponents();
+						System.err.println(t.length);
+						for(Component c: t){
+							System.out.println(c.getName());
+						}
+						popup.add(new CreatureCardLayout(new ActionListener() {
+							public void actionPerformed(ActionEvent e){
+								popup.dispose();
+								click=true;
+							}
+						}));
+						
+						//popup.pack();
+						popup.setVisible(true);
+					}
+>>>>>>> branch 'master' of git@github.com:ianw11/Dungeon-Command.git
 				}
 				else {
 					System.err.println("NOT IMPLEMENTED YET");
@@ -117,6 +158,7 @@ public class HomePageLayout extends JPanel {
 		card.addMouseListener(listener);
 		//card.addActionListener(listener);
 		add(card);
+<<<<<<< HEAD
 		
 		JButton order = new JButton("Order");
 		springLayout.putConstraint(SpringLayout.NORTH, order, 6, SpringLayout.SOUTH, quit);
@@ -124,5 +166,7 @@ public class HomePageLayout extends JPanel {
 		order.setName("order");
 		order.addMouseListener(listener);
 		add(order);
+=======
+>>>>>>> branch 'master' of git@github.com:ianw11/Dungeon-Command.git
 	}
 }

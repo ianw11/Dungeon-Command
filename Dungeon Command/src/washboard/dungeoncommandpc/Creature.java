@@ -36,6 +36,8 @@ public class Creature implements Piece{
 	
 	String cardImage;
 	
+	String cardImage;
+	
 	//Methods for the interface
 	public Color getColor() {
 		return color;
@@ -82,7 +84,11 @@ public class Creature implements Piece{
 	}
 	
 	
+<<<<<<< HEAD
 	//No Range
+=======
+	
+>>>>>>> branch 'master' of git@github.com:ianw11/Dungeon-Command.git
 	public Creature(String nam, int hp, int lev, int size, int spd, int mDmg,
 			String[] types, String[] abilities,
 			ArrayList<CreatureFeatures> features, Point startingPosition, String imageLocation) {
@@ -117,10 +123,16 @@ public class Creature implements Piece{
 		isTapped = false;
 	}
 	
+<<<<<<< HEAD
 	//Has Range
 	public Creature(String nam, int hp, int lev, int size, int spd, int mDmg,
 			int rDmg, int rDist,
 			String[] types, String[] abilities,
+=======
+	
+	public Creature(String nam, int hp, int lev, int size, int spd, int mDmg,
+			int rDmg, int rDist, String[] types, String[] abilities,
+>>>>>>> branch 'master' of git@github.com:ianw11/Dungeon-Command.git
 			ArrayList<CreatureFeatures> features, Point startingPosition, String imageLocation) {
 		
 		int i;
